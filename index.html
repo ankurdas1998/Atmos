@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="index.css" />
+
+    <script
+      defer
+      type="module"
+      src="./js/dom.js"></script>
+    <script
+      defer
+      type="module"
+      src="./js/apiCalls.js"></script>
+    <script
+      defer
+      type="module"
+      src="./assets/iconMapping.js"></script>
+
+    <title>Weather App | FRONTCODER</title>
+  </head>
+
+  <body style="font-family: Poppins">
+    <div class="container">
+      <div
+        class="wrapper"
+        id="userInput">
+        <label for="location">Please enter your location</label>
+        <div class="inputContainer">
+          <div id="location">
+            <input
+              type="text"
+              name="city"
+              id="city"
+              value="Mumbai" />
+          </div>
+
+          <button
+            id="fetchBtn"
+            type="button">
+            <i class="fa-solid fa-caret-right"></i>
+          </button>
+        </div>
+        <p>
+          Showing results for:
+          <br />
+          <span id="locationDetail"></span>
+        </p>
+      </div>
+
+      <div
+        class="wrapper"
+        id="clock">
+        <p>Last Updated At:</p>
+        <div class="time">
+          <span id="hour">00</span>
+          <span id="separator">:</span>
+          <span id="minute">00</span>
+          <span id="meridiem">AM</span>
+        </div>
+        <p>
+          <span id="day">Abc</span><span>&comma;&nbsp;</span
+          ><span id="date">00 Xyz 0000</span>
+        </p>
+      </div>
+
+      <div
+        class="wrapper"
+        id="mainDisplay">
+        <div id="data">
+          <h3><span id="currTemp">00&deg;&nbsp;C</span></h3>
+          <p>L: <span id="low">00.0&deg;</span></p>
+          <p>H: <span id="high">00.0&deg;</span></p>
+        </div>
+        <div id="img">
+          <img
+            src="./assets/default.png"
+            alt="weather" />
+        </div>
+      </div>
+
+      <div
+        class="wrapper"
+        id="details">
+        <p>
+          Air Quality Index: <span>Unknown</span
+          ><i class="fa-solid fa-circle"></i>
+        </p>
+        <p>
+          Humidity: <span>00&percnt;</span><i class="fa-solid fa-droplet"></i>
+        </p>
+      </div>
+
+      <div
+        class="wrapper"
+        id="forecast">
+        <div id="day0">
+          <span class="day">Today</span>
+          <span class="icon"
+            ><img
+              src="./assets/default.png"
+              alt="weather_icon"
+          /></span>
+          <p>
+            <span class="high">00&deg;</span><span class="low">0&deg;</span>
+          </p>
+        </div>
+
+        <div id="day1">
+          <span class="day">Tue</span>
+          <span class="icon"
+            ><img
+              src="./assets/default.png"
+              alt="weather_icon"
+          /></span>
+          <p>
+            <span class="high">00&deg;</span><span class="low">0&deg;</span>
+          </p>
+        </div>
+
+        <div id="day2">
+          <span class="day">Wed</span>
+          <span class="icon"
+            ><img
+              src="./assets/default.png"
+              alt="weather_icon"
+          /></span>
+          <p>
+            <span class="high">00&deg;</span><span class="low">0&deg;</span>
+          </p>
+        </div>
+
+        <div id="day3">
+          <span class="day">Thu</span>
+          <span class="icon"
+            ><img
+              src="./assets/default.png"
+              alt="weather_icon"
+          /></span>
+          <p>
+            <span class="high">00&deg;</span><span class="low">0&deg;</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <p style="text-align: center; opacity: 0.5">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      The icons are not implemented yet
+      <i class="fa-solid fa-triangle-exclamation"></i>
+    </p>
+
+    <div class="pop-up">
+      <p>Unable to fetch weather details.</p>
+      <p>Please check entered location spelling!</p>
+    </div>
+  </body>
+</html>
