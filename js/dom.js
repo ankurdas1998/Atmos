@@ -42,11 +42,6 @@ suggestionsBox.addEventListener("click", async (e) => {
 });
 
 async function renderData(data) {
-  if (!data || !data.city) {
-    showPopup();
-    return;
-  }
-
   const parts = [data.city, data.state, data.country].filter(Boolean);
   const locationStr = parts.join(", ");
 
@@ -188,10 +183,16 @@ document.getElementById("fetchBtn").addEventListener("click", renderData);
 // Run when Enter is pressed in the input
 cityInput.addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
-    const city = e.target.value.trim();
-    if (!city) return;
     suggestionsBox.innerHTML = "";
+
+    const city = e.target.value.trim();
     const data = await getWeatherData(city);
+
+    if (!city || !data) {
+      showPopup();
+      return;
+    }
+
     renderData(data);
   }
 });
