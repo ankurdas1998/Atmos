@@ -34,12 +34,9 @@ suggestionsBox.addEventListener("click", async (e) => {
 
   if (!item) return;
 
-  console.log(item.dataset.city);
-
   cityInput.value = item.dataset.city;
   suggestionsBox.innerHTML = "";
   const data = await getWeatherData(item.dataset.city);
-  console.log(data);
 
   renderData(data);
 });
@@ -189,9 +186,13 @@ window.addEventListener("load", async () => {
 document.getElementById("fetchBtn").addEventListener("click", renderData);
 
 // Run when Enter is pressed in the input
-cityInput.addEventListener("keydown", (e) => {
+cityInput.addEventListener("keydown", async (e) => {
   if (e.key === "Enter") {
-    renderData();
+    const city = e.target.value.trim();
+    if (!city) return;
+    suggestionsBox.innerHTML = "";
+    const data = await getWeatherData(city);
+    renderData(data);
   }
 });
 
