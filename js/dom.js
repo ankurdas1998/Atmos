@@ -1,10 +1,50 @@
-import { getWeatherData } from "./apiCalls.js";
+import { searchLocations, getWeatherData } from "./apiCalls.js";
 
-async function renderData() {
-  const city = document.getElementById("city").value.trim();
+const cityInput = document.getElementById("city");
+const suggestionsBox = document.querySelector("#suggestions");
 
-  const data = await getWeatherData(city);
+function debounce(func, delay) {
+  let timeout;
+  return (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), delay);
+  };
+}
 
+async function handleInput(e) {
+  const query = e.target.value.trim();
+  if (query.length < 2) {
+    suggestionsBox.innerHTML = "";
+    return;
+  }
+
+  const results = await searchLocations(query);
+  suggestionsBox.innerHTML = results
+    .map(
+      (loc) =>
+        `<p class="suggestion-item" data-city="${loc.name}">${loc.name}&comma;&nbsp;${loc.country}</p>`
+    )
+    .join("");
+}
+
+cityInput.addEventListener("input", debounce(handleInput, 300));
+
+suggestionsBox.addEventListener("click", async (e) => {
+  const item = e.target.closest(".suggestion-item");
+
+  if (!item) return;
+
+  console.log(item.dataset.city);
+
+  cityInput.value = item.dataset.city;
+  suggestionsBox.innerHTML = "";
+  const data = await getWeatherData(item.dataset.city);
+  console.log(data);
+
+  renderData(data);
+});
+
+async function renderData(data) {
   if (!data || !data.city) {
     showPopup();
     return;
@@ -139,19 +179,23 @@ function getTimeData(time, timezone) {
 }
 
 // Run on page load
-window.addEventListener("load", renderData);
+window.addEventListener("load", async () => {
+  const defaultCity = cityInput.value.trim() || "Mumbai";
+  const data = await getWeatherData(defaultCity);
+  renderData(data);
+});
 
 // Run on button click
 document.getElementById("fetchBtn").addEventListener("click", renderData);
 
 // Run when Enter is pressed in the input
-document.getElementById("city").addEventListener("keydown", (e) => {
+cityInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     renderData();
   }
 });
 
-document.getElementById("city").addEventListener("focus", (e) => {
+cityInput.addEventListener("focus", (e) => {
   e.target.select();
 });
 

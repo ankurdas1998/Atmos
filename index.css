@@ -10,7 +10,7 @@
   position: absolute;
   top: 20%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   background: #f8d7da;
   color: #721c24;
   padding: 16px;
@@ -79,20 +79,13 @@
     font-size: 14px;
   }
 
-  & p {
-    margin-top: 8px;
-    color: #4ba7cb;
-    font-size: 12px;
-  }
-
   & > .inputContainer {
+    position: relative;
     display: flex;
-    overflow: hidden;
 
     border: 2px solid #407090;
     border-radius: 4px;
     margin-top: 8px;
-    overflow: hidden;
 
     & > #location {
       display: flex;
@@ -119,7 +112,8 @@
       justify-content: center;
       align-items: center;
 
-      padding: 8px;
+      border-radius: 0 4px 4px 0;
+      padding: 8px 12px;
       cursor: pointer;
       background: aquamarine;
       outline: none;
@@ -136,6 +130,40 @@
         font-size: 32px;
       }
     }
+
+    & #suggestions {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      z-index: 10;
+
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+      border-radius: 4px;
+      overflow: hidden;
+
+      p {
+        color: lightblue;
+        padding: 4px;
+        background-color: teal;
+        border-top: 2px solid rgba(0, 255, 255, 0.4);
+        cursor: pointer;
+
+        &:hover {
+          background-color: #009999;
+        }
+      }
+
+      & p:last-child {
+        border-bottom: 2px solid rgba(0, 255, 255, 0.4);
+      }
+    }
+  }
+
+  & p#resultsFor {
+    margin-top: 8px;
+    color: #4ba7cb;
+    font-size: 12px;
   }
 }
 

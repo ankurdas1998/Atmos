@@ -1,7 +1,7 @@
 export async function getWeatherData(city) {
   const cityData = await getLocation(city);
 
-  if (!cityData) return null;
+  if (!cityData) return {};
 
   const weatherURL = `https://api.open-meteo.com/v1/forecast?latitude=${cityData.latitude}&longitude=${cityData.longitude}&daily=temperature_2m_max,temperature_2m_min&current=temperature_2m,relative_humidity_2m,cloud_cover,weather_code&forecast_days=4&ref=freepublicapis.com`;
 
@@ -41,9 +41,7 @@ async function getLocation(cityName) {
   const locationsRes = await fetch(apiURL);
   const resData = await locationsRes.json();
 
-  if (!resData.results) {
-    return null;
-  }
+  if (!resData.results) return [];
 
   const locationData = {
     latitude: resData.results[0].latitude,
@@ -54,4 +52,32 @@ async function getLocation(cityName) {
   };
 
   return locationData;
+}
+export async function searchLocations(cityName) {
+  const apiURL = `https://geocoding-api.open-meteo.com/v1/search?name=${cityName}&count=10&language=en&format=json`;
+
+  const locationsRes = await fetch(apiURL);
+  const resData = await locationsRes.json();
+
+  if (!resData.results) return [];
+
+  const unique = [];
+  const seen = new Set();
+
+  for (const loc of resData.results) {
+    const key = `${loc.name}-${loc.country}`;
+
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push({
+        name: loc.name,
+        state: loc.admin1,
+        country: loc.country,
+        latitude: loc.latitude,
+        longitude: loc.longitude,
+      });
+    }
+  }
+
+  return unique;
 }
